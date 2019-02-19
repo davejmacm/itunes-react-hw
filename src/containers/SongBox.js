@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import SongDetail from "../components/SongDetail"
+import SongList from "../components/SongList"
 
 class SongBox extends Component{
   constructor(props){
     super(props);
     this.state = {
       songs: []
-      // currentSong: null
     };
 
   }
@@ -20,23 +19,21 @@ class SongBox extends Component{
       if (request.status !== 200) return;
       const jsonString = request.responseText;
       const data = JSON.parse(jsonString);
-      this.setState({songs: data.results})
+      this.setState({songs: data.feed.entry})
     });
 
     request.send();
   }
 
 render(){
+  console.log(this.state.songs);
   return(
     <div className="songs-box">
       <h2>Top 20</h2>
-      <SongDetail songs={this.state.songs}/>
+      <SongList songs={this.state.songs}/>
     </div>
   )
 }
-
-
-
 
 }
 
